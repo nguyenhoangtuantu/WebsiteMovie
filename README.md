@@ -1,73 +1,57 @@
-# Welcome to your Lovable project
+# TuanMovies – Frontend playground
 
-## Project info
+Web app mô phỏng một dịch vụ xem phim hiện đại, build bằng React + Vite + TypeScript + Tailwind + shadcn/ui. Điểm nhấn hiện tại:
 
-**URL**: https://lovable.dev/projects/076f6b50-7415-4c61-b8af-eaf87eb05d27
+- Trang chủ đầy đủ hero slider, quick filters, trending, top ranking.
+- Continue Watching + Watchlist với khả năng đồng bộ giả lập đa thiết bị.
+- Trang chi tiết phim có tabs trailer, episodes, bình luận nội bộ.
+- Lịch phát hành (`/schedule`) với calendar, filter và reminder lưu localStorage.
+- News Hub (`/news`, `/news/:slug`) đọc từ data JSON – mock CMS mini.
 
-## How can I edit this code?
+## Getting started
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/076f6b50-7415-4c61-b8af-eaf87eb05d27) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+git clone <repo-url>
+cd WebPhim
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+App chạy ở `http://localhost:5173/`.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Scripts
 
-**Use GitHub Codespaces**
+| Command           | Mô tả                             |
+|-------------------|-----------------------------------|
+| `npm run dev`     | Dev server + HMR                  |
+| `npm run build`   | Build production                  |
+| `npm run preview` | Serve bản build                   |
+| `npm run lint`    | ESLint toàn bộ project            |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Cấu trúc chính
 
-## What technologies are used for this project?
+```
+src/
+├─ components/
+│  ├─ context/   WatchProgressProvider, watchlist
+│  ├─ data/      mock dataset: movies, schedule, news
+│  ├─ hooks/     custom hooks (use-watch-progress, use-comments,…)
+│  ├─ pages/     route components: Home, Schedule, News, …
+│  └─ ui/        shadcn/ui primitives
+└─ lib/
+```
 
-This project is built with:
+Router nằm trong `src/components/App.tsx`. Thêm page mới = tạo component trong `pages/`, add route, rồi link ở `Header.tsx`.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Backend kế hoạch
 
-## How can I deploy this project?
+Hiện mọi dữ liệu (watchlist, comments, news, schedule) đang nằm ở localStorage / mock JSON để demo. Khi cần backend thật:
 
-Simply open [Lovable](https://lovable.dev/projects/076f6b50-7415-4c61-b8af-eaf87eb05d27) and click on Share -> Publish.
+- NestJS + PostgreSQL/Supabase để đồng bộ watchlist/progress/comment.
+- JWT auth + refresh token để sau này mở login.
+- Có thể thêm Redis (queue/cache) nếu muốn realtime sync.
 
-## Can I connect a custom domain to my Lovable project?
+## Deploy
 
-Yes, you can!
+`npm run build` → deploy thư mục `dist/` lên Vercel/Netlify/Cloudflare Pages hoặc bất kỳ static host nào. Hết.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
